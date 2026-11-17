@@ -1,0 +1,34 @@
+name: Build Unity Android APK
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'UnityProject/**'
+      - '.github/workflows/unity-android.yml'
+    branches: [ main ]
+
+jobs:
+  build:
+    name: Build Android APK
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build Unity project
+        uses: game-ci/unity-builder@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        with:
+          projectPath: UnityProject
+          unityVersion: 2022.3.62f1
+          targetPlatform: Android
+          buildMethod: BuildAndroid.Build
+          allowDirtyBuild: true
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: TrainingRange-Android-APK
+          path: UnityProject/Build/TrainingRange.apk
