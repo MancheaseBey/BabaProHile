@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>ESP / FOV Test</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#101820;color:#eef4f7;font:16px system-ui;padding:18px}
+h1{font-size:24px;margin:4px 0 6px}p{color:#aebdc7;font-size:13px;line-height:1.5}
+.card{background:#1a2a36;border:1px solid #314653;border-radius:14px;padding:16px;margin:14px 0}
+label{display:flex;justify-content:space-between;margin:12px 0 6px;font-weight:600}
+input[type=range]{width:100%;accent-color:#42c7a5}
+button{width:100%;padding:14px;border:0;border-radius:10px;background:#42c7a5;color:#071b19;font-weight:800;font-size:15px;margin-top:12px}
+.switch{display:flex;align-items:center;gap:10px;margin:10px 0}.screen{height:250px;background:radial-gradient(circle,#344c5b,#0b1117);border-radius:12px;position:relative;overflow:hidden}
+.target{position:absolute;width:28px;height:42px;border:2px solid #ff6868;border-radius:8px;display:none}
+.target:after{content:"TEST HEDEFİ";position:absolute;top:-20px;left:-15px;font-size:10px;color:#ffb2b2;white-space:nowrap}
+.note{font-size:12px;color:#f0c77a}
+</style></head>
+<body>
+<h1>ESP / FOV Test Alanı</h1>
+<p>Bu, yalnızca telefonda çalışan bağımsız bir arayüz simülasyonudur. Herhangi bir oyuna, oyuncuya veya oyun belleğine bağlanmaz.</p>
+<div class="card"><div class="screen" id="screen"><div class="target" id="target" style="left:62%;top:38%"></div></div>
+<div class="switch"><input id="esp" type="checkbox" checked><label for="esp">ESP simülasyonunu göster</label></div>
+<label>Algılama mesafesi <span id="distanceValue">200 m</span></label><input id="distance" type="range" min="25" max="200" value="200">
+<label>FOV açısı <span id="fovValue">90°</span></label><input id="fov" type="range" min="5" max="180" value="90">
+<button id="fire">ATEŞ ET / HEDEFİ TEST ET</button><p id="result">Hazır. Test hedefi ekranda gösteriliyor.</p></div>
+<p class="note">Not: Bu bir eğitim/test prototipidir; gerçek oyunda ESP veya otomatik nişan alma yapmaz.</p>
+<script>
+const $=id=>document.getElementById(id),target=$("target");
+$("distance").oninput=e=>$("distanceValue").textContent=e.target.value+" m";
+$("fov").oninput=e=>$("fovValue").textContent=e.target.value+"°";
+$("esp").onchange=e=>target.style.display=e.target.checked?"block":"none";
+$("fire").onclick=()=>{
+ const fov=+$("fov").value;
+ $("result").textContent=fov>=60?"Test hedefi simüle edilmiş görüş açısında.":"Test hedefi seçilen dar görüş açısının dışında.";
+};
+</script></body></html>
