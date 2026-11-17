@@ -46,6 +46,7 @@ public class TrainingRange : MonoBehaviour
 
     void BuildUI()
     {
+        var eventSystem=new GameObject("EventSystem",typeof(UnityEngine.EventSystems.EventSystem),typeof(UnityEngine.EventSystems.StandaloneInputModule));
         var canvasObject=new GameObject("Training UI",typeof(Canvas),typeof(CanvasScaler),typeof(GraphicRaycaster));
         canvas=canvasObject.GetComponent<Canvas>(); canvas.renderMode=RenderMode.ScreenSpaceOverlay;
         var scaler=canvasObject.GetComponent<CanvasScaler>(); scaler.uiScaleMode=CanvasScaler.ScaleMode.ScaleWithScreenSize; scaler.referenceResolution=new Vector2(1080,1920);
